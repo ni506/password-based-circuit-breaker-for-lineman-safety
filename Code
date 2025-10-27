@@ -1,1 +1,55 @@
-
+ long int bulb=11;
+ long int heater=4;
+ long int fan=5;
+ char x;
+ #include <Wire.h>
+ #include <LiquidCrystal_I2C.h>
+ LiquidCrystal_I2C lcd(0x27,16,2);
+ void setup()
+ {
+ //digitalWrite);
+ lcd.init();
+ lcd.backlight();
+ lcd.print("Enter Your Password");
+ delay(2000);
+ digitalWrite(11,LOW);
+ pinMode(bulb,OUTPUT);
+ pinMode(heater,OUTPUT);
+ pinMode(fan,OUTPUT);
+ digitalWrite(bulb,LOW);
+ digitalWrite(heater,LOW);
+ digitalWrite(fan,LOW);
+ Serial.begin(9600);
+ }
+ void loop()
+ {
+ if(Serial.available()>0)
+ {
+ x=Serial.read();
+ }
+ if (x=='c')
+ {
+ lcd.setCursor(0,0);
+ lcd.print("Password is Correct");
+ digitalWrite(bulb,HIGH);
+ lcd.setCursor(0,1);
+ lcd.print("Bulb is on ");
+ }
+ else if(x=='d')
+ {
+ lcd.setCursor(0,0);
+ //lcd.clear();
+ lcd.print("Password is Correct");
+ digitalWrite(bulb,LOW);
+ lcd.setCursor(0,1);
+ //lcd.clear();
+ lcd.print("Bulb is off");
+ }
+ else if (x==0 |x!='c'&&x!='d')
+ {
+ lcd.clear();
+ lcd.print("ENTER Correct ");
+ lcd.setCursor(0,1);
+ lcd.print("PassWord");
+ delay(200);
+ }
